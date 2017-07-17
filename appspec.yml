@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /target/mailsender.jar
+    destination: /home/ubuntu/worker/mailsender
+  - source: /src/main/docker/Dockerfile
+    destination: /home/ubuntu/worker/mailsender
+  - source: /deployment/start_container.sh
+    destination: /home/ubuntu/worker/mailsender
+  - source: /deployment/cleanup.sh
+    destination: /home/ubuntu/worker/mailsender
+hooks:
+  AfterInstall:
+    - location: deployment/start_container.sh
+      runas: root
+  BeforeInstall:
+    - location: deployment/cleanup.sh
+      runas: root
